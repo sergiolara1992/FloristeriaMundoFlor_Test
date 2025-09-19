@@ -48,7 +48,6 @@ export class CategoryPage {
       }
     }
 
-    // 2) Fallback by value attribute
     if (!selected) {
       const all = await select.locator("option").all();
       for (const opt of all) {
@@ -60,16 +59,13 @@ export class CategoryPage {
       }
     }
 
-    // Soft assertion: don't fail hard if sort is not available on the site
     expect
       .soft(selected, 'Could not select sort by "price: low to high".')
       .toBeTruthy();
 
-    // Allow the grid to refresh (network idle is acceptable here)
     await this.page.waitForLoadState("networkidle").catch(() => {});
   }
 
-  // Return card name and price (as text) by index
   async getCardNameAndPrice(
     index: number
   ): Promise<{ name: string; price: string }> {
@@ -93,7 +89,6 @@ export class CategoryPage {
     return { name, price };
   }
 
-  // Open product card by index
   async openProductByIndex(index: number): Promise<void> {
     const card = this.gridItems.nth(index);
     await expect(card).toBeVisible();
